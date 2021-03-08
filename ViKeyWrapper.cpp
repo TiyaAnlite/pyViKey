@@ -1,6 +1,17 @@
 #include "ViKeyWrapper.h"
 #include <iostream>
 
+static PyObject* find(PyObject* self, PyObject* args) {
+	DWORD count;
+	DWORD err = VikeyFind(&count);
+	if (err == 0) {
+		return Py_BuildValue("(ii)", 1, count);
+	}
+	else {
+		return Py_BuildValue("(ii)", 0, 0);
+	}
+}
+
 static PyObject* get_HID(PyObject* self, PyObject* args) {
 	DWORD hid;
 	WORD index;
@@ -17,17 +28,6 @@ static PyObject* get_SoftID(PyObject* self, PyObject* args) {
 	if (!ret) return NULL;
 	DWORD err = VikeyGetSoftIDString(index, sid);
 	return Py_BuildValue("ks", err, sid);
-}
-
-static PyObject* find(PyObject* self, PyObject* args) {
-	DWORD count;
-	DWORD err = VikeyFind(&count);
-	if (err == 0) {
-		return Py_BuildValue("(ii)", 1, count);
-	}
-	else {
-		return Py_BuildValue("(ii)", 0, 0);
-	}
 }
 
 static PyObject* md5(PyObject* self, PyObject* args) {
@@ -75,9 +75,9 @@ static PyObject* hmac_sha1(PyObject* self, PyObject* args) {
 }
 
 static PyMethodDef pyViKeyMethods[] = {
+	{"VikeyFind", find, METH_VARARGS, "Find available ViKey"},
 	{"VikeyGetHID", get_HID, METH_VARARGS, "Get hardware ID"},
 	{"VikeyGetSoftIDString", get_SoftID, METH_VARARGS, "Get soft ID"},
-	{"VikeyFind", find, METH_VARARGS, "Find available ViKey"},
 	{"VikeyMD5", md5, METH_VARARGS, "MD5"},
 	{"VikeySHA1", sha1, METH_VARARGS, "SHA1"},
 	{"VikeyHmacMD5", hmac_md5, METH_VARARGS, "SHA1"},

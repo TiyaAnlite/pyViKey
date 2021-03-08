@@ -17,9 +17,9 @@
 #pragma comment (lib, "lib/ViKey_X64_VS2015_MT.lib")
 #endif  // _M_X64
 
+static PyObject* find(PyObject* self, PyObject* args);
 static PyObject* get_HID(PyObject* self, PyObject* args);
 static PyObject* get_SoftID(PyObject* self, PyObject* args);
-static PyObject* find(PyObject* self, PyObject* args);
 static PyObject* md5(PyObject* self, PyObject* args);
 static PyObject* sha1(PyObject* self, PyObject* args);
 static PyObject* hmac_md5(PyObject* self, PyObject* args);
