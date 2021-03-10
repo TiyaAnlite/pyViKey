@@ -57,6 +57,29 @@ enum VikeyType
 extern "C"{
 #endif
 
+//For ViKeyTIME
+typedef struct _VIKEY_TIME
+{
+	BYTE cYear;
+	BYTE cMonth;
+	BYTE cDay;
+	BYTE cHour;
+	BYTE cMinute;
+	BYTE cSecond;
+
+	bool operator < (const _VIKEY_TIME& another) const;
+	bool operator > (const _VIKEY_TIME& another) const;
+} SVikeyTime, * PVIKEYTIME;
+
+//加解密
+enum Des3KeyLengthType
+{
+	Des3KeyLength16 = 0,
+	Des3KeyLength24 = 1
+};
+
+#ifdef _MSC_VER
+
 //【说明】为了让程序员对以下函数一目了然，这里只列出函数的原型，对于函数功能和参数的解释在帮助手册中列出。
 //【说明】请到“1-[产品文档]”目录下查看《ViKey系列加密狗使用说明手册》文档。
 
@@ -99,13 +122,6 @@ DWORD __stdcall ViKeyGetModule(WORD Index, WORD wModuleIndex, WORD* pwValue);
 DWORD __stdcall ViKeySetModule(WORD Index, WORD wModuleIndex, WORD wValue, WORD wMode);
 DWORD __stdcall ViKeyCheckModule(WORD Index, WORD wModuleIndex, WORD *IsZero, WORD* CanDecrase);
 
-//加解密
-enum Des3KeyLengthType
-{
-	Des3KeyLength16 = 0,
-	Des3KeyLength24 = 1
-};
-
 DWORD __stdcall Vikey3DesSetKey(WORD Index, BYTE * pKey, Des3KeyLengthType KeyType);
 DWORD __stdcall Vikey3DesEncrypt(WORD Index, WORD length, BYTE * pText, BYTE* pResult);
 DWORD __stdcall Vikey3DesDecrypt(WORD Index, WORD length, BYTE * pText, BYTE* pResult);
@@ -131,22 +147,52 @@ DWORD __stdcall VikeySHA1(WORD Index, WORD length, BYTE * pText, BYTE* pResult);
 DWORD __stdcall VikeySetSHA1Key(WORD Index, BYTE * pSHA1key);
 DWORD __stdcall VikeyHmacSHA1(WORD Index, WORD length, BYTE * pText, BYTE* pResult);
 
-//For ViKeyTIME
-typedef struct _VIKEY_TIME 
-{ 
-	BYTE cYear; 
-	BYTE cMonth; 
-	BYTE cDay; 
-	BYTE cHour; 
-	BYTE cMinute; 
-	BYTE cSecond; 
-
-	bool operator < (const _VIKEY_TIME &another) const;
-	bool operator > (const _VIKEY_TIME &another) const;
-} SVikeyTime, *PVIKEYTIME;
-
 //获取时钟型加密狗中的内部时间
 DWORD __stdcall VikeyGetTime(WORD Index, PVIKEYTIME pTime);
+
+#else
+DWORD VikeyFind(DWORD* pdwCount);
+DWORD VikeyGetHID(WORD Index, DWORD* pdwHID);
+DWORD VikeyGetType(WORD Index, VikeyType* pType);
+DWORD VikeyGetLevel(WORD Index, BYTE* pLevel);
+DWORD VikeySetPtroductName(WORD Index, WCHAR szName[16]);
+DWORD VikeyGetPtroductName(WORD Index, WCHAR szName[16]);
+DWORD VikeyGetPtroductNameA(WORD Index, CHAR szName[16]);
+DWORD VikeyUserLogin(WORD Index, char* pUserPassWord);
+DWORD VikeyAdminLogin(WORD Index, char* pAdminPassWord);
+DWORD VikeyLogoff(WORD Index);
+DWORD VikeySetUserPassWordAttempt(WORD Index, BYTE cAttempt);
+DWORD VikeySetAdminPassWordAttempt(WORD Index, BYTE cAttempt);
+DWORD VikeyGetUserPassWordAttempt(WORD Index, BYTE* pcCurrentAttempt, BYTE* pcMaxAttempt);
+DWORD VikeyGetAdminPassWordAttempt(WORD Index, BYTE* pcCurrentAttempt, BYTE* pcMaxAttempt);
+DWORD VikeyResetPassword(WORD Index, char* pNewUserPassWord, char* pNewAdminPassWord);
+DWORD VikeySetSoftIDString(WORD Index, char* pSoftIDString);
+DWORD VikeyGetSoftIDString(WORD Index, char* pSoftIDString);
+DWORD VikeyReadData(WORD Index, WORD Addr, WORD Length, BYTE* buffer);
+DWORD VikeyWriteData(WORD Index, WORD Addr, WORD Length, BYTE* buffer);
+DWORD ViKeyRandom(WORD Index, WORD* pwRandom1, WORD* pwRandom2, WORD* pwRandom3, WORD* pwRandom4);
+DWORD ViKeyDecraseModule(WORD Index, WORD wModuleIndex);
+DWORD ViKeyGetModule(WORD Index, WORD wModuleIndex, WORD* pwValue);
+DWORD ViKeySetModule(WORD Index, WORD wModuleIndex, WORD wValue, WORD wMode);
+DWORD ViKeyCheckModule(WORD Index, WORD wModuleIndex, WORD* IsZero, WORD* CanDecrase);
+DWORD Vikey3DesSetKey(WORD Index, BYTE* pKey, Des3KeyLengthType KeyType);
+DWORD Vikey3DesEncrypt(WORD Index, WORD length, BYTE* pText, BYTE* pResult);
+DWORD Vikey3DesDecrypt(WORD Index, WORD length, BYTE* pText, BYTE* pResult);
+DWORD VikeyDesSetKey(WORD Index, BYTE* pKey);
+DWORD VikeyDesEncrypt(WORD Index, WORD InLength, BYTE* pText, BYTE* pResult, WORD* OutLength);
+DWORD VikeyDesDecrypt(WORD Index, WORD InLength, BYTE* pText, BYTE* pResult, WORD* OutLength);
+DWORD VikeySetAutoRunUrl(WORD Index, BYTE* pUrl);
+DWORD VikeyGetAutoRunUrl(WORD Index, BYTE* pUrl);
+DWORD VikeySetMaxClientCount(WORD Index, WORD dwCount);
+DWORD VikeyGetMaxClientCount(WORD Index, WORD* pdwCount);
+DWORD VikeyMD5(WORD Index, WORD length, BYTE* pText, BYTE* pResult);
+DWORD VikeySetMD5Key(WORD Index, BYTE* pMD5key);
+DWORD VikeyHmacMD5(WORD Index, WORD length, BYTE* pText, BYTE* pResult);
+DWORD VikeySHA1(WORD Index, WORD length, BYTE* pText, BYTE* pResult);
+DWORD VikeySetSHA1Key(WORD Index, BYTE* pSHA1key);
+DWORD VikeyHmacSHA1(WORD Index, WORD length, BYTE* pText, BYTE* pResult);
+DWORD VikeyGetTime(WORD Index, PVIKEYTIME pTime);
+#endif  //_MSC_VER
 
 
 #ifdef __cplusplus

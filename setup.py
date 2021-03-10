@@ -1,6 +1,9 @@
 from distutils.core import setup, Extension
 
 module1 = Extension('pyViKey',
+                    libraries = ['ViKey'],
+                    library_dirs = ['lib'],
+                    optional = ['static'],
                     sources = ['ViKeyWrapper.cpp'])
 
 setup (name = 'pyViKey',
