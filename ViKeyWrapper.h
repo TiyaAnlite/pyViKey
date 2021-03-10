@@ -5,10 +5,11 @@
 
 //#include <stdio.h>
 //#include <tchar.h>
-#include <windows.h>
+//#include <windows.h>
 
 #include "lib/Vikey.h"
 
+#ifdef _WIN32
 #ifdef _M_IX86
 #pragma comment (lib, "lib/ViKey_X86_VS2015_MT.lib")
 #endif // _M_IX86  
@@ -16,10 +17,14 @@
 #ifdef _M_X64
 #pragma comment (lib, "lib/ViKey_X64_VS2015_MT.lib")
 #endif  // _M_X64
+#endif  //_WIN32
+
+
 
 static PyObject* find(PyObject* self, PyObject* args);
 static PyObject* get_HID(PyObject* self, PyObject* args);
 static PyObject* get_SoftID(PyObject* self, PyObject* args);
+static PyObject* ramdom(PyObject* self, PyObject* args);
 static PyObject* md5(PyObject* self, PyObject* args);
 static PyObject* sha1(PyObject* self, PyObject* args);
 static PyObject* hmac_md5(PyObject* self, PyObject* args);

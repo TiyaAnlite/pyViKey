@@ -158,6 +158,7 @@
     <Library Include="lib\ViKey_X86_VS2015_MT.lib" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="pyViKey.pyi" />
     <None Include="setup.py" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

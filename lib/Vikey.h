@@ -1,58 +1,66 @@
 #ifndef VIKEY_API
 #define VIKEY_API
 
+//mindef
+typedef unsigned long       DWORD;
+typedef int                 BOOL;
+typedef unsigned char       BYTE;
+typedef unsigned short      WORD;
+typedef char				CHAR;
+typedef unsigned short		WCHAR;    // wc,   16-bit UNICODE character
+
 enum VikeyType
 {
-	ViKeyAPP = 0,						//ÊµÓÃĞÍ¼ÓÃÜ¹·
-	ViKeySTD = 1,						//±ê×¼ĞÍ¼ÓÃÜ¹·
-	ViKeyNET = 2,						//ÍøÂçĞÍ¼ÓÃÜ¹·
-	ViKeyPRO = 3,						//×¨ÒµĞÍ¼ÓÃÜ¹·
-	ViKeyWEB = 4,						//Éí·İÈÏÖ¤ĞÍ¼ÓÃÜ¹·
-	ViKeyTIME = 5,						//Ê±ÖÓĞÍ¼ÓÃÜ¹·£¬ÄÚ²¿¶ÀÁ¢Ê±ÖÓ
-	ViKeyMultiFunctional = 0x0A,		//¶à¹¦ÄÜ¼ÓÃÜ¹·  Ö§³ÖÈí¼ş¼ÓÃÜ Ö§³ÖÎÄµµ¼ÓÃÜ
-	ViKeyMultiFunctionalTime = 0x0B,	//¶à¹¦ÄÜÊ±ÖÓ¼ÓÃÜ¹·
-	ViKeyInvalid	//ÎŞĞ§ÀàĞÍ
+	ViKeyAPP = 0,						//å®ç”¨å‹åŠ å¯†ç‹—
+	ViKeySTD = 1,						//æ ‡å‡†å‹åŠ å¯†ç‹—
+	ViKeyNET = 2,						//ç½‘ç»œå‹åŠ å¯†ç‹—
+	ViKeyPRO = 3,						//ä¸“ä¸šå‹åŠ å¯†ç‹—
+	ViKeyWEB = 4,						//èº«ä»½è®¤è¯å‹åŠ å¯†ç‹—
+	ViKeyTIME = 5,						//æ—¶é’Ÿå‹åŠ å¯†ç‹—ï¼Œå†…éƒ¨ç‹¬ç«‹æ—¶é’Ÿ
+	ViKeyMultiFunctional = 0x0A,		//å¤šåŠŸèƒ½åŠ å¯†ç‹—  æ”¯æŒè½¯ä»¶åŠ å¯† æ”¯æŒæ–‡æ¡£åŠ å¯†
+	ViKeyMultiFunctionalTime = 0x0B,	//å¤šåŠŸèƒ½æ—¶é’ŸåŠ å¯†ç‹—
+	ViKeyInvalid	//æ— æ•ˆç±»å‹
 };
 
 
-#define ViKeyNoLevel		0	//ÄäÃûÈ¨ÏŞ(Ã»ÓĞµÇÂ¼¹ı¼ÓÃÜ¹·Ê±£¬´ËÊ±È¨ÏŞÎªÄäÃûÈ¨ÏŞ)
-#define ViKeyUserLevel		1	//ÓÃ»§È¨ÏŞ(µ÷ÓÃVikeyUserLoginµÇÂ¼¼ÓÃÜ¹·³É¹¦ºó£¬´ËÊ±È¨ÏŞÎªÓÃ»§È¨ÏŞ)
-#define ViKeyAdminLevel		2	//¹ÜÀíÔ±È¨ÏŞ(µ÷ÓÃVikeyAdminLoginµÇÂ¼¼ÓÃÜ¹·³É¹¦ºó£¬´ËÊ±È¨ÏŞÎª¹ÜÀíÔ±È¨ÏŞ)
+#define ViKeyNoLevel		0	//åŒ¿åæƒé™(æ²¡æœ‰ç™»å½•è¿‡åŠ å¯†ç‹—æ—¶ï¼Œæ­¤æ—¶æƒé™ä¸ºåŒ¿åæƒé™)
+#define ViKeyUserLevel		1	//ç”¨æˆ·æƒé™(è°ƒç”¨VikeyUserLoginç™»å½•åŠ å¯†ç‹—æˆåŠŸåï¼Œæ­¤æ—¶æƒé™ä¸ºç”¨æˆ·æƒé™)
+#define ViKeyAdminLevel		2	//ç®¡ç†å‘˜æƒé™(è°ƒç”¨VikeyAdminLoginç™»å½•åŠ å¯†ç‹—æˆåŠŸåï¼Œæ­¤æ—¶æƒé™ä¸ºç®¡ç†å‘˜æƒé™)
 
-#define VIKEY_SUCCESS						0x00000000 //³É¹¦
-#define VIKEY_ERROR_NO_VIKEY				0x80000001 //Ã»ÓĞÕÒµ½ViKey¼ÓÃÜËø
-#define VIKEY_ERROR_INVALID_PASSWORD		0x80000002 //ÃÜÂë´íÎó
-#define VIKEY_ERROR_NEED_FIND				0x80000003 //ÇëÏÈ²éÕÒ¼ÓÃÜËø
-#define VIKEY_ERROR_INVALID_INDEX			0x80000004 //ÎŞĞ§µÄ¾ä±ú
-#define VIKEY_ERROR_INVALID_VALUE			0x80000005 //ÊıÖµ´íÎó
-#define VIKEY_ERROR_INVALID_KEY				0x80000006 //ÃØÔ¿ÎŞĞ§
-#define VIKEY_ERROR_GET_VALUE				0x80000007 //¶ÁÈ¡ĞÅÏ¢´íÎó
-#define VIKEY_ERROR_SET_VALUE				0x80000008 //ÉèÖÃĞÅÏ¢´íÎó
-#define VIKEY_ERROR_NO_CHANCE				0x80000009 //Ã»ÓĞ»ú»á
-#define VIKEY_ERROR_NO_TAUTHORITY			0x8000000A //È¨ÏŞ²»×ã
-#define VIKEY_ERROR_INVALID_ADDR_OR_SIZE	0x8000000B //µØÖ·»ò³¤¶È´íÎó
-#define VIKEY_ERROR_RANDOM					0x8000000C //»ñÈ¡Ëæ»úÊı´íÎó
-#define VIKEY_ERROR_SEED					0x8000000D //»ñÈ¡ÖÖ×Ó´íÎó
-#define VIKEY_ERROR_CONNECTION				0x8000000E //Í¨ĞÅ´íÎó
-#define VIKEY_ERROR_CALCULATE				0x8000000F //Ëã·¨»ò¼ÆËã´íÎó
-#define VIKEY_ERROR_MODULE					0x80000010 //¼ÆÊıÆ÷´íÎó
-#define VIKEY_ERROR_GENERATE_NEW_PASSWORD	0x80000011 //²úÉúÃÜÂë´íÎó
-#define VIKEY_ERROR_ENCRYPT_FAILED			0x80000012 //¼ÓÃÜÊı¾İ´íÎó
-#define VIKEY_ERROR_DECRYPT_FAILED			0x80000013 //½âÃÜÊı¾İ´íÎó
-#define VIKEY_ERROR_ALREADY_LOCKED			0x80000014 //ViKey¼ÓÃÜËøÒÑ¾­±»Ëø¶¨
-#define VIKEY_ERROR_UNKNOWN_COMMAND			0x80000015 //ÎŞĞ§µÄÃüÁî
-#define VIKEY_ERROR_NO_SUPPORT				0x80000016 //µ±Ç°ViKey¼ÓÃÜËø²»Ö§³Ö´Ë¹¦ÄÜ
-#define VIKEY_ERROR_CATCH					0x80000017 //·¢ÉúÒì³£
-#define VIKEY_ERROR_UNKNOWN_ERROR			0xFFFFFFFF //Î´Öª´íÎó
+#define VIKEY_SUCCESS						0x00000000 //æˆåŠŸ
+#define VIKEY_ERROR_NO_VIKEY				0x80000001 //æ²¡æœ‰æ‰¾åˆ°ViKeyåŠ å¯†é”
+#define VIKEY_ERROR_INVALID_PASSWORD		0x80000002 //å¯†ç é”™è¯¯
+#define VIKEY_ERROR_NEED_FIND				0x80000003 //è¯·å…ˆæŸ¥æ‰¾åŠ å¯†é”
+#define VIKEY_ERROR_INVALID_INDEX			0x80000004 //æ— æ•ˆçš„å¥æŸ„
+#define VIKEY_ERROR_INVALID_VALUE			0x80000005 //æ•°å€¼é”™è¯¯
+#define VIKEY_ERROR_INVALID_KEY				0x80000006 //ç§˜é’¥æ— æ•ˆ
+#define VIKEY_ERROR_GET_VALUE				0x80000007 //è¯»å–ä¿¡æ¯é”™è¯¯
+#define VIKEY_ERROR_SET_VALUE				0x80000008 //è®¾ç½®ä¿¡æ¯é”™è¯¯
+#define VIKEY_ERROR_NO_CHANCE				0x80000009 //æ²¡æœ‰æœºä¼š
+#define VIKEY_ERROR_NO_TAUTHORITY			0x8000000A //æƒé™ä¸è¶³
+#define VIKEY_ERROR_INVALID_ADDR_OR_SIZE	0x8000000B //åœ°å€æˆ–é•¿åº¦é”™è¯¯
+#define VIKEY_ERROR_RANDOM					0x8000000C //è·å–éšæœºæ•°é”™è¯¯
+#define VIKEY_ERROR_SEED					0x8000000D //è·å–ç§å­é”™è¯¯
+#define VIKEY_ERROR_CONNECTION				0x8000000E //é€šä¿¡é”™è¯¯
+#define VIKEY_ERROR_CALCULATE				0x8000000F //ç®—æ³•æˆ–è®¡ç®—é”™è¯¯
+#define VIKEY_ERROR_MODULE					0x80000010 //è®¡æ•°å™¨é”™è¯¯
+#define VIKEY_ERROR_GENERATE_NEW_PASSWORD	0x80000011 //äº§ç”Ÿå¯†ç é”™è¯¯
+#define VIKEY_ERROR_ENCRYPT_FAILED			0x80000012 //åŠ å¯†æ•°æ®é”™è¯¯
+#define VIKEY_ERROR_DECRYPT_FAILED			0x80000013 //è§£å¯†æ•°æ®é”™è¯¯
+#define VIKEY_ERROR_ALREADY_LOCKED			0x80000014 //ViKeyåŠ å¯†é”å·²ç»è¢«é”å®š
+#define VIKEY_ERROR_UNKNOWN_COMMAND			0x80000015 //æ— æ•ˆçš„å‘½ä»¤
+#define VIKEY_ERROR_NO_SUPPORT				0x80000016 //å½“å‰ViKeyåŠ å¯†é”ä¸æ”¯æŒæ­¤åŠŸèƒ½
+#define VIKEY_ERROR_CATCH					0x80000017 //å‘ç”Ÿå¼‚å¸¸
+#define VIKEY_ERROR_UNKNOWN_ERROR			0xFFFFFFFF //æœªçŸ¥é”™è¯¯
 
 #ifdef __cplusplus
 extern "C"{
 #endif
 
-//¡¾ËµÃ÷¡¿ÎªÁËÈÃ³ÌĞòÔ±¶ÔÒÔÏÂº¯ÊıÒ»Ä¿ÁËÈ»£¬ÕâÀïÖ»ÁĞ³öº¯ÊıµÄÔ­ĞÍ£¬¶ÔÓÚº¯Êı¹¦ÄÜºÍ²ÎÊıµÄ½âÊÍÔÚ°ïÖúÊÖ²áÖĞÁĞ³ö¡£
-//¡¾ËµÃ÷¡¿Çëµ½¡°1-[²úÆ·ÎÄµµ]¡±Ä¿Â¼ÏÂ²é¿´¡¶ViKeyÏµÁĞ¼ÓÃÜ¹·Ê¹ÓÃËµÃ÷ÊÖ²á¡·ÎÄµµ¡£
+//ã€è¯´æ˜ã€‘ä¸ºäº†è®©ç¨‹åºå‘˜å¯¹ä»¥ä¸‹å‡½æ•°ä¸€ç›®äº†ç„¶ï¼Œè¿™é‡Œåªåˆ—å‡ºå‡½æ•°çš„åŸå‹ï¼Œå¯¹äºå‡½æ•°åŠŸèƒ½å’Œå‚æ•°çš„è§£é‡Šåœ¨å¸®åŠ©æ‰‹å†Œä¸­åˆ—å‡ºã€‚
+//ã€è¯´æ˜ã€‘è¯·åˆ°â€œ1-[äº§å“æ–‡æ¡£]â€ç›®å½•ä¸‹æŸ¥çœ‹ã€ŠViKeyç³»åˆ—åŠ å¯†ç‹—ä½¿ç”¨è¯´æ˜æ‰‹å†Œã€‹æ–‡æ¡£ã€‚
 
-/*********For ViKeyAPP¡¢ViKeySTD¡¢ViKeyNet¡¢ViKeyPRO¡¢ViKeyTime APIs**********/
+/*********For ViKeyAPPã€ViKeySTDã€ViKeyNetã€ViKeyPROã€ViKeyTime APIs**********/
 
 DWORD __stdcall VikeyFind(DWORD* pdwCount);
 DWORD __stdcall VikeyGetHID(WORD Index, DWORD *pdwHID);
@@ -62,36 +70,36 @@ DWORD __stdcall VikeySetPtroductName(WORD Index, WCHAR szName[16]);
 DWORD __stdcall VikeyGetPtroductName(WORD Index, WCHAR szName[16]);
 DWORD __stdcall VikeyGetPtroductNameA(WORD Index, CHAR szName[16]);
 
-//µÇÂ½¡¢×¢Ïú¼ÓÃÜ¹·
-//¼ÓÃÜ¹·ÃÜÂë³¤¶È8¸ö×Ö·û ×ÖÄ¸»òÊı×Ö
+//ç™»é™†ã€æ³¨é”€åŠ å¯†ç‹—
+//åŠ å¯†ç‹—å¯†ç é•¿åº¦8ä¸ªå­—ç¬¦ å­—æ¯æˆ–æ•°å­—
 DWORD __stdcall VikeyUserLogin(WORD Index, char * pUserPassWord);
 DWORD __stdcall VikeyAdminLogin(WORD Index, char * pAdminPassWord);
 DWORD __stdcall VikeyLogoff(WORD Index);
 
-//ÉèÖÃÃÜÂë³¢ÊÔ´ÎÊı¡¢ĞŞ¸ÄÃÜÂë
+//è®¾ç½®å¯†ç å°è¯•æ¬¡æ•°ã€ä¿®æ”¹å¯†ç 
 DWORD __stdcall VikeySetUserPassWordAttempt(WORD Index, BYTE cAttempt);
 DWORD __stdcall VikeySetAdminPassWordAttempt(WORD Index, BYTE cAttempt);
 DWORD __stdcall VikeyGetUserPassWordAttempt(WORD Index, BYTE *pcCurrentAttempt, BYTE *pcMaxAttempt);
 DWORD __stdcall VikeyGetAdminPassWordAttempt(WORD Index, BYTE *pcCurrentAttempt, BYTE *pcMaxAttempt);
 DWORD __stdcall VikeyResetPassword(WORD Index, char * pNewUserPassWord, char * pNewAdminPassWord);
 
-//Èí¼şID¶ÁĞ´
-//Èí¼şID³¤¶È8¸ö×Ö·û ×ÖÄ¸»òÊı×Ö
+//è½¯ä»¶IDè¯»å†™
+//è½¯ä»¶IDé•¿åº¦8ä¸ªå­—ç¬¦ å­—æ¯æˆ–æ•°å­—
 DWORD __stdcall VikeySetSoftIDString(WORD Index, char * pSoftIDString);
 DWORD __stdcall VikeyGetSoftIDString(WORD Index, char * pSoftIDString);
 
-//¶ÁĞ´Êı¾İ
+//è¯»å†™æ•°æ®
 DWORD __stdcall VikeyReadData(WORD Index, WORD Addr, WORD Length, BYTE * buffer);
 DWORD __stdcall VikeyWriteData(WORD Index, WORD Addr, WORD Length, BYTE * buffer);
 DWORD __stdcall ViKeyRandom(WORD Index, WORD* pwRandom1, WORD* pwRandom2, WORD* pwRandom3, WORD* pwRandom4);
 
-//¼ÆÊıÆ÷Ä£¿é
+//è®¡æ•°å™¨æ¨¡å—
 DWORD __stdcall ViKeyDecraseModule(WORD Index, WORD wModuleIndex);
 DWORD __stdcall ViKeyGetModule(WORD Index, WORD wModuleIndex, WORD* pwValue);
 DWORD __stdcall ViKeySetModule(WORD Index, WORD wModuleIndex, WORD wValue, WORD wMode);
 DWORD __stdcall ViKeyCheckModule(WORD Index, WORD wModuleIndex, WORD *IsZero, WORD* CanDecrase);
 
-//¼Ó½âÃÜ
+//åŠ è§£å¯†
 enum Des3KeyLengthType
 {
 	Des3KeyLength16 = 0,
@@ -106,15 +114,15 @@ DWORD __stdcall VikeyDesSetKey(WORD Index, BYTE * pKey);
 DWORD __stdcall VikeyDesEncrypt(WORD Index, WORD InLength, BYTE * pText, BYTE* pResult, WORD *OutLength);
 DWORD __stdcall VikeyDesDecrypt(WORD Index, WORD InLength, BYTE * pText, BYTE* pResult, WORD *OutLength);
 
-//×Ô¶¯´ò¿ªÍøÒ³½Ó¿Ú
+//è‡ªåŠ¨æ‰“å¼€ç½‘é¡µæ¥å£
 DWORD __stdcall VikeySetAutoRunUrl(WORD Index, BYTE *pUrl);
 DWORD __stdcall VikeyGetAutoRunUrl(WORD Index, BYTE *pUrl);
 
-//For ViKeyNET¡¢ViKeyPRO
+//For ViKeyNETã€ViKeyPRO
 DWORD __stdcall VikeySetMaxClientCount(WORD Index, WORD dwCount);
 DWORD __stdcall VikeyGetMaxClientCount(WORD Index, WORD* pdwCount);
 
-//For ViKeyWEB¡¢ViKeyPRO
+//For ViKeyWEBã€ViKeyPRO
 DWORD __stdcall VikeyMD5(WORD Index, WORD length, BYTE * pText, BYTE* pResult);
 DWORD __stdcall VikeySetMD5Key(WORD Index, BYTE * pMD5key);
 DWORD __stdcall VikeyHmacMD5(WORD Index, WORD length, BYTE * pText, BYTE* pResult);
@@ -137,7 +145,7 @@ typedef struct _VIKEY_TIME
 	bool operator > (const _VIKEY_TIME &another) const;
 } SVikeyTime, *PVIKEYTIME;
 
-//»ñÈ¡Ê±ÖÓĞÍ¼ÓÃÜ¹·ÖĞµÄÄÚ²¿Ê±¼ä
+//è·å–æ—¶é’Ÿå‹åŠ å¯†ç‹—ä¸­çš„å†…éƒ¨æ—¶é—´
 DWORD __stdcall VikeyGetTime(WORD Index, PVIKEYTIME pTime);
 
 

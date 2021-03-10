@@ -33,5 +33,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="setup.py" />
+    <None Include="pyViKey.pyi" />
   </ItemGroup>
 </Project>
