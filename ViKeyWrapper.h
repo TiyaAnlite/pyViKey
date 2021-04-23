@@ -12,11 +12,11 @@
 /*
 #ifdef _WIN32
 #ifdef _M_IX86
-#pragma comment (lib, "lib/ViKey.lib")
+#pragma comment (lib, "lib/ViKey_x86.lib")
 #endif // _M_IX86  
 
 #ifdef _M_X64
-#pragma comment (lib, "lib/ViKey_x86.lib")
+#pragma comment (lib, "lib/ViKey.lib")
 #endif  // _M_X64
 #endif  //_WIN32
 
