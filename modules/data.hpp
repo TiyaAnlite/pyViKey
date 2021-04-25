@@ -15,5 +15,5 @@ static PyObject* ramdom(PyObject* self, PyObject* args) {
 		PyList_Append(ramdom_data, Py_BuildValue("H", d3));
 		PyList_Append(ramdom_data, Py_BuildValue("H", d4));
 	}
-	return Py_BuildValue("(kN)", err, ramdom_data);
+	return Py_BuildValue("kN", err, ramdom_data);
 }
