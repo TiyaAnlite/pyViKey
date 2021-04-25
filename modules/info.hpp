@@ -5,7 +5,11 @@ static PyObject* get_HID(PyObject* self, PyObject* args) {
 	int ret = PyArg_ParseTuple(args, "i", &index);
 	if (!ret) return NULL;
 	DWORD err = VikeyGetHID(index, &hid);
-	return Py_BuildValue("kk", err, hid);
+	if (err) {
+		PyErr_SetObject(PyExc_RuntimeError, Py_BuildValue("k", err));
+		return NULL;
+	}
+	return Py_BuildValue("k", hid);
 }
 
 static PyObject* get_SoftID(PyObject* self, PyObject* args) {
@@ -14,7 +18,11 @@ static PyObject* get_SoftID(PyObject* self, PyObject* args) {
 	int ret = PyArg_ParseTuple(args, "i", &index);
 	if (!ret) return NULL;
 	DWORD err = VikeyGetSoftIDString(index, sid);
-	return Py_BuildValue("ks#", err, sid, 8);
+	if (err) {
+		PyErr_SetObject(PyExc_RuntimeError, Py_BuildValue("k", err));
+		return NULL;
+	}
+	return Py_BuildValue("s#", sid, 8);
 }
 
 static PyObject* get_type(PyObject* self, PyObject* args) {
@@ -23,7 +31,11 @@ static PyObject* get_type(PyObject* self, PyObject* args) {
 	int ret = PyArg_ParseTuple(args, "i", &index);
 	if (!ret) return NULL;
 	DWORD err = VikeyGetType(index, &type);
-	return Py_BuildValue("ki", err, type);
+	if (err) {
+		PyErr_SetObject(PyExc_RuntimeError, Py_BuildValue("k", err));
+		return NULL;
+	}
+	return Py_BuildValue("i", type);
 }
 
 static PyObject* get_level(PyObject* self, PyObject* args) {
@@ -32,7 +44,11 @@ static PyObject* get_level(PyObject* self, PyObject* args) {
 	int ret = PyArg_ParseTuple(args, "i", &index);
 	if (!ret) return NULL;
 	DWORD err = VikeyGetLevel(index, &user_level);
-	return Py_BuildValue("kB", err, user_level);
+	if (err) {
+		PyErr_SetObject(PyExc_RuntimeError, Py_BuildValue("k", err));
+		return NULL;
+	}
+	return Py_BuildValue("B", user_level);
 }
 
 static PyObject* get_name(PyObject* self, PyObject* args) {
@@ -41,5 +57,9 @@ static PyObject* get_name(PyObject* self, PyObject* args) {
 	int ret = PyArg_ParseTuple(args, "i", &index);
 	if (!ret) return NULL;
 	DWORD err = VikeyGetPtroductName(index, szName);
-	return Py_BuildValue("ku", err, szName);
+	if (err) {
+		PyErr_SetObject(PyExc_RuntimeError, Py_BuildValue("k", err));
+		return NULL;
+	}
+	return Py_BuildValue("u", szName);
 }

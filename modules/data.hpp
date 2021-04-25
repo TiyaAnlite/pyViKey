@@ -9,11 +9,15 @@ static PyObject* ramdom(PyObject* self, PyObject* args) {
 	WORD d4;
 	PyObject* ramdom_data = Py_BuildValue("[]");
 	DWORD err = ViKeyRandom(index, &d1, &d2, &d3, &d4);
-	if (err == 0) {
+	if (err) {
+		PyErr_SetObject(PyExc_RuntimeError, Py_BuildValue("k", err));
+		return NULL;
+	}
+	else {
 		PyList_Append(ramdom_data, Py_BuildValue("H", d1));
 		PyList_Append(ramdom_data, Py_BuildValue("H", d2));
 		PyList_Append(ramdom_data, Py_BuildValue("H", d3));
 		PyList_Append(ramdom_data, Py_BuildValue("H", d4));
 	}
-	return Py_BuildValue("kN", err, ramdom_data);
+	return Py_BuildValue("N", ramdom_data);
 }
