@@ -1,4 +1,6 @@
+#pragma once
 #include "../pyModule.h"
+
 static PyObject* find(PyObject* self, PyObject* args) {
 	DWORD count;
 	DWORD err = VikeyFind(&count);

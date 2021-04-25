@@ -1,4 +1,6 @@
+#pragma once
 #include "../pyModule.h"
+
 static PyObject* get_HID(PyObject* self, PyObject* args) {
 	DWORD hid;
 	WORD index;

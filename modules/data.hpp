@@ -1,4 +1,6 @@
+#pragma once
 #include "../pyModule.h"
+
 static PyObject* ramdom(PyObject* self, PyObject* args) {
 	WORD index;
 	int ret = PyArg_ParseTuple(args, "i", &index);
@@ -43,7 +45,7 @@ static PyObject* write_data(PyObject* self, PyObject* args) {
 	WORD addr;
 	WORD length;
 	const BYTE* buffer;
-	int ret = PyArg_ParseTuple(args, "is#i", &addr, &buffer, &length, &index);
+	int ret = PyArg_ParseTuple(args, "iy#i", &addr, &buffer, &length, &index);
 	if (!ret) return NULL;
 	DWORD err = VikeyWriteData(index, addr, length, const_cast<BYTE*>(buffer));
 	if (err) {
