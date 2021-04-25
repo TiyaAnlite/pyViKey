@@ -9,6 +9,8 @@ static PyMethodDef pyViKeyLibMethods[] = {
 	{"VikeyGetLevel", get_level, METH_VARARGS, "Get user level"},
 	{"VikeyGetPtroductName", get_name, METH_VARARGS, "Get ptroduct name"},
 	{"ViKeyRandom", ramdom, METH_VARARGS, "Hardware ramdom data"},
+	{"VikeyReadData", read_data, METH_VARARGS, "Read data from hardware"},
+	{"VikeyWriteData", write_data, METH_VARARGS, "Write data to hardware"},
 	{"VikeyMD5", md5, METH_VARARGS, "MD5"},
 	{"VikeySHA1", sha1, METH_VARARGS, "SHA1"},
 	{"VikeyHmacMD5", hmac_md5, METH_VARARGS, "SHA1"},
