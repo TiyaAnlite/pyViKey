@@ -15,16 +15,31 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="ViKeyWrapper.h">
+    <ClInclude Include="lib\Vikey.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="lib\Vikey.h">
+    <ClInclude Include="pyModule.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="modules\module.hpp">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="modules\base.hpp">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="modules\data.hpp">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="modules\info.hpp">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ViKeyWrapper.cpp">
       <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="modules\hash.hpp">
+      <Filter>头文件</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

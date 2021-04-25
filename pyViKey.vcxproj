@@ -24,6 +24,7 @@
     <ProjectGuid>{2c423c29-1bfd-44cb-84d9-f6810ebbd052}</ProjectGuid>
     <RootNamespace>pyViKey</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <ProjectName>pyViKeyLib</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -148,9 +149,14 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="lib\Vikey.h" />
-    <ClInclude Include="ViKeyWrapper.h" />
+    <ClInclude Include="modules\base.hpp" />
+    <ClInclude Include="modules\data.hpp" />
+    <ClInclude Include="modules\info.hpp" />
+    <ClInclude Include="modules\module.hpp" />
+    <ClInclude Include="pyModule.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="modules\hash.hpp" />
     <ClCompile Include="ViKeyWrapper.cpp" />
   </ItemGroup>
   <ItemGroup>
