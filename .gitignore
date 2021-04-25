@@ -131,3 +131,9 @@ dmypy.json
 .vs/
 .vscode/
 x64/
+
+# IDEA
+.idea/
+
+# Test
+test/

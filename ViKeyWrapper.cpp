@@ -92,7 +92,7 @@ static PyObject* hmac_sha1(PyObject* self, PyObject* args) {
 	return Py_BuildValue("ky#", err, pResult, 20);
 }
 
-static PyMethodDef pyViKeyMethods[] = {
+static PyMethodDef pyViKeyLibMethods[] = {
 	{"VikeyFind", find, METH_VARARGS, "Find available ViKey"},
 	{"VikeyGetHID", get_HID, METH_VARARGS, "Get hardware ID"},
 	{"VikeyGetSoftIDString", get_SoftID, METH_VARARGS, "Get soft ID"},
@@ -104,16 +104,16 @@ static PyMethodDef pyViKeyMethods[] = {
 	NULL
 };
 
-static struct PyModuleDef pyViKey = {
+static struct PyModuleDef pyViKeyLib = {
 	PyModuleDef_HEAD_INIT,
-	"pyViKey",
-	"pyViKey Lib",
+	"pyViKeyLib",
+	"pyViKey low-level interface",
 	-1,
-	pyViKeyMethods
+	pyViKeyLibMethods
 };
 
 PyMODINIT_FUNC
-PyInit_pyViKey(void)
+PyInit_pyViKeyLib(void)
 {
-	return PyModule_Create(&pyViKey);
+	return PyModule_Create(&pyViKeyLib);
 }
