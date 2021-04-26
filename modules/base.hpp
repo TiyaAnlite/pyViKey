@@ -15,8 +15,7 @@ static PyObject* login_user(PyObject* self, PyObject* args) {
 	WORD index;
 	BYTE user_level = 0;
 	const char* password;
-	int ret = PyArg_ParseTuple(args, "si", &password, &index);
-	if (!ret) return NULL;
+	if (!PyArg_ParseTuple(args, "si", &password, &index)) return NULL;
 	DWORD err = VikeyUserLogin(index, const_cast<char*>(password));
 	if (err) {
 		PyErr_SetObject(PyExc_RuntimeError, Py_BuildValue("k", err));
@@ -36,8 +35,7 @@ static PyObject* login_admin(PyObject* self, PyObject* args) {
 	WORD index;
 	BYTE user_level = 0;
 	const char* password;
-	int ret = PyArg_ParseTuple(args, "si", &password, &index);
-	if (!ret) return NULL;
+	if (!PyArg_ParseTuple(args, "si", &password, &index)) return NULL;
 	DWORD err = VikeyAdminLogin(index, const_cast<char*>(password));
 	if (err) {
 		PyErr_SetObject(PyExc_RuntimeError, Py_BuildValue("k", err));
@@ -56,8 +54,7 @@ static PyObject* login_admin(PyObject* self, PyObject* args) {
 static PyObject* logout(PyObject* self, PyObject* args) {
 	WORD index;
 	BYTE user_level = 0;
-	int ret = PyArg_ParseTuple(args, "i", &index);
-	if (!ret) return NULL;
+	if (!PyArg_ParseTuple(args, "i", &index)) return NULL;
 	DWORD err = VikeyLogoff(index);
 	if (err) {
 		PyErr_SetObject(PyExc_RuntimeError, Py_BuildValue("k", err));

@@ -3,8 +3,7 @@
 
 static PyObject* ramdom(PyObject* self, PyObject* args) {
 	WORD index;
-	int ret = PyArg_ParseTuple(args, "i", &index);
-	if (!ret) return NULL;
+	if (!PyArg_ParseTuple(args, "i", &index)) return NULL;
 	WORD d1;
 	WORD d2;
 	WORD d3;
@@ -29,15 +28,17 @@ static PyObject* read_data(PyObject* self, PyObject* args) {
 	WORD index;
 	WORD addr;
 	WORD length;
-	BYTE buffer[4096];  //Max: ViKeyPRO(4kb)
-	int ret = PyArg_ParseTuple(args, "iii", &addr, &length, &index);
-	if (!ret) return NULL;
+	if (!PyArg_ParseTuple(args, "iii", &addr, &length, &index)) return NULL;
+	BYTE* buffer = new BYTE[length]; 
 	DWORD err = VikeyReadData(index, addr, length, buffer);
 	if (err) {
+		delete[] buffer;
 		PyErr_SetObject(PyExc_RuntimeError, Py_BuildValue("k", err));
 		return NULL;
 	}
-	return Py_BuildValue("y#", buffer, length);
+	PyObject* o = Py_BuildValue("y#", buffer, length);
+	delete[] buffer;
+	return o;
 }
 
 static PyObject* write_data(PyObject* self, PyObject* args) {
@@ -45,8 +46,7 @@ static PyObject* write_data(PyObject* self, PyObject* args) {
 	WORD addr;
 	WORD length;
 	const BYTE* buffer;
-	int ret = PyArg_ParseTuple(args, "iy#i", &addr, &buffer, &length, &index);
-	if (!ret) return NULL;
+	if (!PyArg_ParseTuple(args, "iy#i", &addr, &buffer, &length, &index)) return NULL;
 	DWORD err = VikeyWriteData(index, addr, length, const_cast<BYTE*>(buffer));
 	if (err) {
 		PyErr_SetObject(PyExc_RuntimeError, Py_BuildValue("k", err));
