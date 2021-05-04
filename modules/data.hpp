@@ -15,6 +15,7 @@ static PyObject* ramdom(PyObject* self, PyObject* args) {
 		PyErr_SetObject(PyExc_RuntimeError, Py_BuildValue("k", err));
 		return NULL;
 	}
+	/*
 	else {
 		PyList_Append(ramdom_data, Py_BuildValue("H", d1));
 		PyList_Append(ramdom_data, Py_BuildValue("H", d2));
@@ -22,6 +23,8 @@ static PyObject* ramdom(PyObject* self, PyObject* args) {
 		PyList_Append(ramdom_data, Py_BuildValue("H", d4));
 	}
 	return Py_BuildValue("N", ramdom_data);
+	*/
+	return Py_BuildValue("(HHHH)", d1, d2, d3, d4);
 }
 
 static PyObject* read_data(PyObject* self, PyObject* args) {
