@@ -146,12 +146,18 @@ class PyViKeyPlus:
     ViKey Python库高级封装，提供面向对象支持与错误包装，状态码帮助
     """
 
-    def __init__(self, index: int = 0):
+    def __init__(self, index: int = None, select=False, auto_select=True):
         """
         :param index: ViKey序号
+        :param select: 交互提示选择(index指定时忽略)
+        :param auto_select: 在启用交互选择的情况下，自动选择唯一一个硬件
         """
-        find()
+        count = find()
         self.index = index
+        if not self.index and select:
+            self.__select(count, auto_select)
+        if not self.index:
+            self.index = 0
         self.HID = 0
         self.softHID = ""
         self.type = None
@@ -173,6 +179,28 @@ class PyViKeyPlus:
             self.__logout()
         except:
             pass
+
+    def __select(self, count: int, auto_select=True):
+        """交互选择模式下，选择多个硬件"""
+        hardware = []
+        for i in range(count):
+            info = f"[ViKeyPlus]ViKey[{i}] - "
+            try:
+                HID = _Lib.VikeyGetHID(i)
+            except RuntimeError as err:
+                info += f"err: {ErrorType(err.args[0]).name}"
+            else:
+                info += str(HID)
+            hardware.append(info)
+        [print(i) for i in hardware]
+        if auto_select and len(hardware) == 1:
+            self.index = 0
+            return
+        while True:
+            s = input("Select>>> ")
+            if s.isdigit() and int(s) < len(hardware):
+                self.index = int(s)
+                return
 
     def __check(self):
         if self.HID != _Lib.VikeyGetHID(self.index):
