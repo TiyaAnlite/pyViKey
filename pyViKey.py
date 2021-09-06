@@ -1,7 +1,7 @@
 import enum
 from functools import wraps
 
-import pyViKeyLib as _Lib
+from . import pyViKeyLib as _Lib
 
 
 def vikey_exception_wrapper(func):
