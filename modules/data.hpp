@@ -8,10 +8,10 @@ static PyObject* ramdom(PyObject* self, PyObject* args) {
 	WORD d2;
 	WORD d3;
 	WORD d4;
-	PyObject* ramdom_data = Py_BuildValue("[]");
+	//PyObject* ramdom_data = Py_BuildValue("[]");
 	DWORD err = ViKeyRandom(index, &d1, &d2, &d3, &d4);
 	if (err) {
-		Py_DECREF(ramdom_data);
+		//Py_DECREF(ramdom_data);
 		PyErr_SetObject(PyExc_RuntimeError, Py_BuildValue("k", err));
 		return NULL;
 	}
